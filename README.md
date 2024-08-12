@@ -1,5 +1,7 @@
 # aibabyweb
-
+## 頁面開發順序
+1. 登入、註冊頁面
+2. 功能頁面
 ## Project setup
 ```
 npm install
