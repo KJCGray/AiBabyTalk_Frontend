@@ -1,9 +1,16 @@
 <template lang="pug">
     div(class="w-screen h-screen bg-[#FFFDD0]")
       topBar
-      div(class='flex items-center w-auto h-[92%] justify-around select-none')
-        div(class='w-[30%] h-[80%] bg-white border-2 border-slate-900 rounded-lg flex justify-center items-center cursor-pointer text-3xl hover:bg-red-300')
-          p 聊天機器人
+      div(class='flex flex-col items-center w-auto h-[92%] justify-around select-none')
+        div(class='flex items-center w-auto h-auto mt-2 ml-auto mr-2')
+          img(src="/audio.png" alt="audio" class="w-8 h-8 mr-2")
+          div(class='w-auto h-auto p-2 bg-white border-2 rounded border-slate-500')
+            p 你好,我是你的朋友,小米,一起來聊聊天吧！
+        div(class='w-[90%] h-18 bg-white rounded-lg border-2 border-black flex items-center mt-auto mb-2')
+          div(class='flex items-center justify-center w-12 h-12 ml-1 rounded-full hover:bg-slate-100')
+            img(src="/record.png" alt="record" class="w-10 h-10")
+          div(class='flex items-center justify-center w-12 h-12 ml-auto mr-1 rounded-full hover:bg-slate-100')
+            img(src="/publish.png" alt="publish" class="w-8 h-8")
     </template>
     <script>
     import topBar from "../components/topbar.vue";
