@@ -1,7 +1,8 @@
 <template lang="pug">
     div(class="w-screen h-screen bg-[#FFFDD0]")
       topBar
-      div(class='flex flex-col items-center w-auto h-[92%] justify-around select-none')
+      div(class='flex flex-col items-center w-auto h-[91%] justify-around select-none')
+        img(src="/arrow-left.png" alt="back" class="w-10 h-10 ml-2 mr-auto")
         div(class='flex items-center w-auto h-auto mt-2 ml-auto mr-2')
           img(src="/audio.png" alt="audio" class="w-8 h-8 mr-2")
           div(class='w-auto h-auto p-2 bg-white border-2 rounded border-slate-500')

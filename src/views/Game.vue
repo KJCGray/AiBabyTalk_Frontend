@@ -1,13 +1,36 @@
 <template lang="pug">
-    div(class="w-screen h-screen bg-[#FFFDD0]")
-      topBar
-      div(class='flex items-center w-auto h-[92%] justify-around select-none')
-        div(class='w-[30%] h-[80%] bg-white border-2 border-slate-900 rounded-lg flex justify-center items-center cursor-pointer text-3xl hover:bg-red-300')
-          p 遊戲世界
-    </template>
-<script>
+  div(class="w-screen h-screen bg-[#FFFDD0]")
+    topBar
+    div(
+      ref='gameContainer'
+      class='flex items-center w-auto h-[91%] justify-around select-none'
+    )
+</template>
+
+<script setup>
 import topBar from "../components/topbar.vue";
-export default {
-  components: { topBar },
-};
+import Phaser from "phaser";
+import { onMounted, ref } from "vue";
+import startScene from "@/gameScenes/startScene";
+import rabbitForCarrot from "@/gameScenes/game1";
+
+// 將 Phaser 實體綁定至此
+const gameContainer = ref(null);
+const game = ref(null);
+
+onMounted(() => {
+  const config = {
+    type: Phaser.AUTO,
+    width: 1000,
+    height: 500,
+    scene: [startScene, rabbitForCarrot],  // 使用場景陣列
+    parent: gameContainer.value,
+    fps: {
+      target: 60,
+      forceSetTimeOut: true,
+    },
+  };
+
+  game.value = new Phaser.Game(config);
+});
 </script>
