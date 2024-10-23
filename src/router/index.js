@@ -5,6 +5,7 @@ import MainPage from "@/views/MainPage.vue";
 import ChatBot from "@/views/ChatBot.vue";
 import Game from "@/views/Game.vue";
 import LearnBot from "@/views/LearnBot.vue";
+import GameStatistics from "@/views/GameStatistics.vue";
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: "/learn",
     name: "learnbot",
     component: LearnBot,
+  },
+  {
+    path: "/statistics",
+    name: "statistics",
+    component: GameStatistics,
   },
 ];
 
