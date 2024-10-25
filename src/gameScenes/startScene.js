@@ -186,6 +186,7 @@ export default {
                 confirm.destroy();
                 confirmNo.destroy();
                 animalTween.stop(); // 停止跳动动画
+                this.scene.start("farm");
               });
 
               // 再考虑一下按钮的点击事件
