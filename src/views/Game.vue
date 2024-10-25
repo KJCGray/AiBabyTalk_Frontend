@@ -11,6 +11,7 @@ import Phaser from "phaser";
 import { onMounted, ref, onBeforeUnmount } from "vue";
 import startScene from "@/gameScenes/startScene";
 import rabbitForCarrot from "@/gameScenes/game1";
+import farm from "@/gameScenes/farm";
 import vegetableSelect from "@/gameScenes/littleGame/vegetableSelect";
 import balloonColor from "@/gameScenes/littleGame/balloonColor";
 import findHouse from "@/gameScenes/littleGame/findHouse";
@@ -32,7 +33,7 @@ onMounted(() => {
     type: Phaser.AUTO,
     width: window.innerWidth, // 動態寬度
     height: window.innerHeight, // 動態高度
-    scene: [startScene, rabbitForCarrot, vegetableSelect, balloonColor, findHouse, whosSound, howManyFruits],
+    scene: [startScene, farm, rabbitForCarrot, vegetableSelect, balloonColor, findHouse, whosSound, howManyFruits],
     parent: gameContainer.value,
     fps: {
       target: 60,
