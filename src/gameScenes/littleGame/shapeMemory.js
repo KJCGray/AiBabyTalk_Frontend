@@ -20,7 +20,7 @@ export default {
       // 設定互動的形狀圖案
       this.circle = this.add
         .sprite(screenWidth * 0.2, screenHeight * 0.6, "circle")
-        .setScale(1)
+        .setScale(0.6)
         .setInteractive();
       this.triangle = this.add
         .sprite(screenWidth * 0.5, screenHeight * 0.6, "triangle")

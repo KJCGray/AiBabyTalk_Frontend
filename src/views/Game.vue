@@ -17,6 +17,8 @@ import balloonColor from "@/gameScenes/littleGame/balloonColor";
 import findHouse from "@/gameScenes/littleGame/findHouse";
 import whosSound from "@/gameScenes/littleGame/whosSound";
 import howManyFruits from "@/gameScenes/littleGame/howManyFruits";
+import fruitGuessGame from "@/gameScenes/littleGame/fruitGuessGame";
+import shapeMemory from "@/gameScenes/littleGame/shapeMemory";
 
 // 將 Phaser 實體綁定至此
 const gameContainer = ref(null);
@@ -33,7 +35,7 @@ onMounted(() => {
     type: Phaser.AUTO,
     width: window.innerWidth, // 動態寬度
     height: window.innerHeight, // 動態高度
-    scene: [startScene, farm, rabbitForCarrot, vegetableSelect, balloonColor, findHouse, whosSound, howManyFruits],
+    scene: [startScene, farm, rabbitForCarrot, vegetableSelect, balloonColor, findHouse, whosSound, howManyFruits, fruitGuessGame, shapeMemory],
     parent: gameContainer.value,
     fps: {
       target: 60,
