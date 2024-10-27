@@ -123,7 +123,7 @@ export default {
             .sprite(screenWidth / 2, screenHeight / 2, "btnTemplate")
             .setScale(1.25, 3);
           confirmText = this.add
-            .text(screenWidth / 2, screenHeight / 2 - 50, `確定要選擇${selectedAnimal}嗎？`, {
+            .text(screenWidth / 2, screenHeight / 2 - 50, `你確定要選擇${selectedAnimal}\n當你的冒險小夥伴嗎？`, {
               fontSize: `${Math.min(screenWidth, screenHeight) * 0.05}px`,
               color: "#000",
               fontStyle: "bold",
@@ -147,7 +147,7 @@ export default {
           // 再考虑一下按钮
           confirmNoBtn = this.add
             .sprite(screenWidth / 2 + 80, screenHeight / 2 + 30, "barRed")
-            .setScale(0.45, 0.6);
+            .setScale(0.5, 0.6);
           const confirmNo = this.add
             .text(screenWidth / 2 + 80, screenHeight / 2 + 30, "再考慮一下", {
               fontSize: `${Math.min(screenWidth, screenHeight) * 0.04}px`,

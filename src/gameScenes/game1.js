@@ -187,7 +187,7 @@ export default {
       this.scene.start("findHouse"); // 切換至下一場景
     });
 
-    
+
     const findsound = this.add
       .text(screenWidth * 0.91, screenHeight * 0.1, "誰的叫聲?", {
         fontSize: `${Math.min(screenWidth, screenHeight) * 0.03}px`,
@@ -202,7 +202,7 @@ export default {
       this.audio.stop();
       this.scene.start("whosSound"); // 切換至下一場景
     });
-    
+
     const countFruit = this.add
       .text(screenWidth * 0.91, screenHeight * 0.15, "幾顆水果?", {
         fontSize: `${Math.min(screenWidth, screenHeight) * 0.03}px`,
