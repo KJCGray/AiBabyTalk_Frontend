@@ -217,6 +217,37 @@ export default {
       this.audio.stop();
       this.scene.start("howManyFruits"); // 切換至下一場景
     });
+    
+    const guessFruit = this.add
+      .text(screenWidth * 0.8, screenHeight * 0.15, "甚麼水果?", {
+        fontSize: `${Math.min(screenWidth, screenHeight) * 0.03}px`,
+        backgroundColor: "#000",
+        color: "#fff",
+        padding: { top: 5, bottom: 5, left: 5, right: 5 },
+        borderRadius: 5,
+      })
+      .setInteractive();
+
+      guessFruit.on("pointerdown", () => {
+      this.audio.stop();
+      this.scene.start("fruitGuessGame"); // 切換至下一場景
+    });
+
+    
+    const shapeMemory = this.add
+      .text(screenWidth * 0.7, screenHeight * 0.15, "甚麼形狀?", {
+        fontSize: `${Math.min(screenWidth, screenHeight) * 0.03}px`,
+        backgroundColor: "#000",
+        color: "#fff",
+        padding: { top: 5, bottom: 5, left: 5, right: 5 },
+        borderRadius: 5,
+      })
+      .setInteractive();
+
+      shapeMemory.on("pointerdown", () => {
+      this.audio.stop();
+      this.scene.start("shapeMemory"); // 切換至下一場景
+    });
 
     // 添加返回主頁的按鈕
     const backButton = this.add
