@@ -106,14 +106,17 @@ export default {
     });
 
 
-    const welcomeMessage = "歡迎來到小兔子的開心農場!在這裡，你需要陪著小兔子出去冒險，解決各種問題";
+    const welcomeMessage = " 歡迎來到小兔子的開心農場!在這裡，你需要陪著小兔子出去冒險，解決各種問題 ";
     let displayedText = ''; // Starts empty
 
     const welcomeText = this.add.text(screenWidth / 2, screenHeight * 0.1, displayedText, {
       fontSize: `${Math.min(screenWidth, screenHeight) * 0.04}px`,
-      color: "#000",
+      color: "#fff",
       fontFamily: "Arial",
-    }).setOrigin(0.5);
+      fontStyle: "bold",
+      backgroundColor: "#000",
+      borderRadius: 20,
+    }).setOrigin(0.5).setDepth(21);
 
     const showMsg = (msg) => {
       let index = 0;
@@ -142,16 +145,16 @@ export default {
     };
 
     // 使用回調來確保順序
-    delayDisplay(welcomeMessage, "然後回到農場，跟著小兔子一起種下蔬菜種子，幫助蔬菜們長大!", () => {
-      delayDisplay("然後回到農場，跟著小兔子一起種下蔬菜種子，幫助蔬菜們長大!", "接下來，我們先來幫小兔子一起找第一個蔬菜種子，請點擊，去冒險");
+    delayDisplay(welcomeMessage, " 然後回到農場，跟著小兔子一起種下蔬菜種子，幫助蔬菜們長大! ", () => {
+      delayDisplay(" 然後回到農場，跟著小兔子一起種下蔬菜種子，幫助蔬菜們長大!", "接下來，我們先來幫小兔子一起找第一個蔬菜種子，請點擊，去冒險 ");
     });
 
-    this.time.delayedCall(welcomeMessage.length * 100 + 1000 + "然後回到農場，跟著小兔子一起種下蔬菜種子，幫助蔬菜們長大!".length * 100 + 1000, () => {
+    this.time.delayedCall(welcomeMessage.length * 100 + 1000 + " 然後回到農場，跟著小兔子一起種下蔬菜種子，幫助蔬菜們長大! ".length * 100 + 1000, () => {
       // 創建半透明灰色覆蓋層
       const overlay = this.add.graphics();
       overlay.fillStyle(0x000000, 0.5); // 半透明灰色
       overlay.fillRect(0, 0, screenWidth, screenHeight); // 覆蓋整個畫面
-      overlay.setDepth(20);
+      overlay.setDepth(18);
     });
 
   },
