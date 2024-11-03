@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "aibabyweb": "file:",
     "autoprefixer": "^10",
     "axios": "^1.7.2",
     "chart.js": "^3.7.0",
