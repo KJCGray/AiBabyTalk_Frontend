@@ -27,6 +27,9 @@ export default {
     this.load.image("uiSquareFrame", "/UI/UI_SquareFrame.png"); // 载入底板
     this.load.image("barGreen", "/UI/Bar_Green.png"); // 载入底板
     this.load.image("barRed", "/UI/Bar_Red.png"); // 载入底板
+    // 載入音樂
+    this.load.audio("rabbitSelect", "/audio/gameVoice/1.wav");
+    this.load.audio("openMusic", "/audio/openingMusic.mp3");
   },
 
   create: function () {
@@ -58,6 +61,13 @@ export default {
     this.add.sprite(screenWidth * 0.2, screenHeight * 0.4, "tree");
     this.add.sprite(screenWidth * 0.3, screenHeight * 0.4, "tree");
     this.add.sprite(screenWidth * 0.85, screenHeight * 0.4, "fountain");
+
+    // 設定選擇語音
+    this.rabbitSelect = this.sound.add("rabbitSelect", { loop: false, volume: 0.5 });
+    this.openMusic = this.sound.add("openMusic", { loop: false, volume: 0.2 });
+    this.openMusic.play();
+
+
 
     // 动态设置按钮与文字
     startBtn = this.add.sprite(screenWidth * 0.5, screenHeight * 0.5, "btnTemplate").setScale(0.5);
@@ -128,15 +138,17 @@ export default {
               color: "#000",
               fontStyle: "bold",
               fontFamily: "Arial",
+              padding: { top: 5, bottom: 5 },
+              lineSpacing: 10,
             })
             .setOrigin(0.5);
 
           // 确定按钮
           confirmYesBtn = this.add
-            .sprite(screenWidth / 2 - 80, screenHeight / 2 + 30, "barGreen")
+            .sprite(screenWidth / 2 - 150, screenHeight / 2 + 80, "barGreen")
             .setScale(0.45, 0.6);
           const confirm = this.add
-            .text(screenWidth / 2 - 80, screenHeight / 2 + 30, "確定", {
+            .text(screenWidth / 2 - 150, screenHeight / 2 + 80, "確定", {
               fontSize: `${Math.min(screenWidth, screenHeight) * 0.04}px`,
               color: "#fff",
               fontStyle: "bold",
@@ -146,10 +158,10 @@ export default {
 
           // 再考虑一下按钮
           confirmNoBtn = this.add
-            .sprite(screenWidth / 2 + 80, screenHeight / 2 + 30, "barRed")
+            .sprite(screenWidth / 2 + 150, screenHeight / 2 + 80, "barRed")
             .setScale(0.5, 0.6);
           const confirmNo = this.add
-            .text(screenWidth / 2 + 80, screenHeight / 2 + 30, "再考慮一下", {
+            .text(screenWidth / 2 + 150, screenHeight / 2 + 80, "再考慮一下", {
               fontSize: `${Math.min(screenWidth, screenHeight) * 0.04}px`,
               color: "#fff",
               fontStyle: "bold",
@@ -165,6 +177,7 @@ export default {
             y: screenHeight * 0.5, // 移動到新位置 Y
             duration: 500, // 動畫持續時間
             onComplete: () => {
+              this.rabbitSelect.play();
               // 在新位置跳動
               const animalTween = this.tweens.add({
                 targets: animalSprite,
@@ -186,6 +199,7 @@ export default {
                 confirm.destroy();
                 confirmNo.destroy();
                 animalTween.stop(); // 停止跳动动画
+                this.openMusic.stop();
                 this.scene.start("farm");
               });
 

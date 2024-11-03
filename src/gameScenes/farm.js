@@ -1,3 +1,4 @@
+let gameProgress = 0;
 export default {
   key: "farm",
   preload: function () {
@@ -8,14 +9,23 @@ export default {
     this.load.image("btnTemplate", "/UI/ButtonTemplate.png");
     this.load.image("circleFrame", "/UI/UI_CircledFrame.png");
     this.load.image("blankGarden", "/Objects/GardenBed_Blank.png");
+    this.load.image("carrotChild", "/Objects/GardenBed_Carrots_01.png");
+    this.load.image("carrotAdult", "/Objects/GardenBed_Carrots_02.png");
     this.load.image("arrowDown", "/Terrain_Common/Arrow_Down.png");
     this.load.image("arrowUp", "/Terrain_Common/Arrow_Up.png");
     this.load.image("rabbitDown", "/Characters/Rabbit_Down.png");
+    this.load.audio("farmIntro", "/audio/gameVoice/3.wav");
+    this.load.audio("clickIntro", "/audio/gameVoice/4.wav");
+    this.load.audio("openMusic", "/audio/openingMusic.mp3");
   },
   create: function () {
     // 取得當前螢幕的寬高
     const screenWidth = this.cameras.main.width;
     const screenHeight = this.cameras.main.height;
+
+    // 背景音樂
+    this.openMusic = this.sound.add("openMusic", { loop: true, volume: 0.2 });
+    this.openMusic.play();
 
     // 動態設置背景
     const tileSprite = this.add.tileSprite(
@@ -33,9 +43,14 @@ export default {
     this.rabbit = this.add.sprite(screenWidth * 0.1, screenHeight * 0.45, "rabbitDown");
     this.rabbit.setDepth(11);
 
+
+    // 設定語音
+    this.farmIntro = this.sound.add("farmIntro", { loop: false, volume: 0.5 });
+    this.clickIntro = this.sound.add("clickIntro", { loop: false, volume: 0.5 });
+
     // 關卡進度
     this.add.sprite(screenWidth * 0.28, screenHeight * 0.42, "circleFrame").setScale(0.3);
-    this.add.sprite(screenWidth * 0.2, screenHeight * 0.48, "blankGarden").setScale(1.25);
+    this.garden1 = this.add.sprite(screenWidth * 0.2, screenHeight * 0.48, "blankGarden").setScale(1.25);
     this.add.level1 = this.add
       .text(screenWidth * 0.269, screenHeight * 0.374, "1", {
         fontSize: `${Math.min(screenWidth, screenHeight) * 0.05}px`,
@@ -46,6 +61,10 @@ export default {
       })
       .setDepth(1)
       .setStroke("#ffffff", 5);
+
+    // 替換第一個 garden 圖片
+    if (gameProgress === 1) this.garden1.setTexture("carrotChild");
+    if (gameProgress === 2) this.garden1.setTexture("carrotAdult");
     this.add.sprite(screenWidth * 0.3, screenHeight * 0.67, "arrowDown").setAngle(-15);
     this.add.sprite(screenWidth * 0.45, screenHeight * 0.80, "circleFrame").setScale(0.3);
     this.add.sprite(screenWidth * 0.37, screenHeight * 0.85, "blankGarden").setScale(1.25);
@@ -102,6 +121,8 @@ export default {
 
     // 點擊按鈕進行場景切換
     this.startBtn.on("pointerdown", () => {
+      gameProgress += 1;
+      this.openMusic.stop();
       this.scene.start("rabbitForCarrot"); // 加載的場景
     });
 
@@ -121,7 +142,7 @@ export default {
     const showMsg = (msg) => {
       let index = 0;
       this.time.addEvent({
-        delay: 100,
+        delay: 160,
         callback: () => {
           if (index < msg.length) {
             displayedText += msg[index];
@@ -133,10 +154,15 @@ export default {
       });
     };
 
-    showMsg(welcomeMessage);
+    console.log(gameProgress);
+
+    if (gameProgress === 0) {
+      this.farmIntro.play();
+      showMsg(welcomeMessage);
+    }
 
     const delayDisplay = (delayMsg, displayMsg, callback) => {
-      this.time.delayedCall(delayMsg.length * 100 + 1000, () => {
+      this.time.delayedCall(delayMsg.length * 160 + 1000, () => {
         displayedText = '';
         welcomeText.setText(displayedText);
         showMsg(displayMsg);
@@ -145,11 +171,15 @@ export default {
     };
 
     // 使用回調來確保順序
-    delayDisplay(welcomeMessage, " 然後回到農場，跟著小兔子一起種下蔬菜種子，幫助蔬菜們長大! ", () => {
-      delayDisplay(" 然後回到農場，跟著小兔子一起種下蔬菜種子，幫助蔬菜們長大!", "接下來，我們先來幫小兔子一起找第一個蔬菜種子，請點擊，去冒險 ");
-    });
+    if (gameProgress === 0) {
+      delayDisplay(welcomeMessage, " 然後回到農場，跟著小兔子一起種下蔬菜種子，幫助蔬菜們長大! ", () => {
+        delayDisplay(" 然後回到農場，跟著小兔子一起種下蔬菜種子，幫助蔬菜們長大!", "接下來，我們先來幫小兔子一起找第一個蔬菜種子，請點擊'去冒險'按鈕 ");
+      });
+    }
 
-    this.time.delayedCall(welcomeMessage.length * 100 + 1000 + " 然後回到農場，跟著小兔子一起種下蔬菜種子，幫助蔬菜們長大! ".length * 100 + 1000, () => {
+
+    this.time.delayedCall(welcomeMessage.length * 160 + 1000 + " 然後回到農場，跟著小兔子一起種下蔬菜種子，幫助蔬菜們長大! ".length * 160 + 1500, () => {
+      this.clickIntro.play();
       // 創建半透明灰色覆蓋層
       const overlay = this.add.graphics();
       overlay.fillStyle(0x000000, 0.5); // 半透明灰色
