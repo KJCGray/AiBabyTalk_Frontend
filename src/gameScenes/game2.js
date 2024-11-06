@@ -3,7 +3,7 @@ let rabbitPosition = { x: null, y: null };
 let walkProgress = 0;
 
 export default {
-  key: "rabbitForCarrot",
+  key: "rabbitCucumber",
   preload: function () {
     // 加載新場景的資源
     this.load.image("grassTexture", "/background/Grass_Texture.png");
@@ -12,7 +12,7 @@ export default {
     this.load.image("rabbitDown", "/Characters/Rabbit_Down.png");
     this.load.image("rabbitLeft", "/Characters/Rabbit_Left.png");
     this.load.image("rabbitUp", "/Characters/Rabbit_Up.png");
-    this.load.image("bush", "/Objects/Bush.png");
+    this.load.image("Hedge_Roses", "/Objects/Hedge_Roses.png");
     this.load.image("love", "/UI/Status_Love.png");
     this.load.image("endSquare", "/UI/ButtonTemplate.png");
     this.load.image("fenceLeft", "/Fences/Fence_Left.png");
@@ -27,6 +27,7 @@ export default {
     this.load.image("arrowUp", "/Terrain_Common/Arrow_Up.png");
     this.load.image("door", "/Objects/Door_Golden.png");
     this.load.image("carrot", "/Objects/Carrot.png");
+    this.load.image("cucumber", "/Objects/Cucumber.png");
     // 麥克風
     this.load.image("record", "/record.png");
     this.load.image("play", "/play-alt-1.png");
@@ -41,7 +42,8 @@ export default {
     this.load.audio("secondTalk", "/audio/gameVoice/10.wav");
     this.load.audio("littleGameBack", "/audio/gameVoice/12-哇!太棒了！.wav");
     this.load.audio("yourTurn", "/audio/gameVoice/現在交給你試一次吧！.wav");
-    this.load.audio("goBack", "/audio/gameVoice/現在我們回到農場看看種下的種子吧.wav");
+    this.load.audio("goBack", "/audio/gameVoice/你真厲害，小兔子成功打開了鎖住的門，找到了小黃瓜種子.wav");
+    this.load.audio("catIntro", "/audio/gameVoice/小兔子決定在花園裡種植新鮮的小黃瓜.wav");
   },
   create: function () {
     // 取得當前螢幕的寬高
@@ -63,7 +65,7 @@ export default {
 
     // 創建兔子角色並設置深度，並保存到場景變數中
     if (rabbitPosition.x !== null && rabbitPosition.y !== null) {
-      this.rabbit = this.add.sprite(screenWidth * 0.6, screenHeight * 0.65, "rabbitDown");
+      this.rabbit = this.add.sprite(screenWidth * 0.65, screenHeight * 0.45, "rabbitDown");
     } else {
       this.rabbit = this.add.sprite(screenWidth * 0.08, screenHeight * 0.85, "rabbitDown");
     }
@@ -80,28 +82,32 @@ export default {
     this.goBack = this.sound.add("goBack", { loop: false, volume: 0.5 });
 
     // 根據畫面動態設置柵欄及其他物件
-    this.add.sprite(screenWidth * 0.05, screenHeight * 0.7, "bush");
-    this.add.sprite(screenWidth * 0.134, screenHeight * 0.7, "bush");
-    this.add.sprite(screenWidth * 0.233, screenHeight * 0.7, "bush").setDepth(10);
-    this.add.sprite(screenWidth * 0.233, screenHeight * 0.595, "bush").setDepth(5);
-    this.add.sprite(screenWidth * 0.233, screenHeight * 0.49, "bush").setDepth(1);
-    this.add.sprite(screenWidth * 0.333, screenHeight * 0.49, "bush");
-    this.add.sprite(screenWidth * 0.433, screenHeight * 0.49, "bush");
-    this.add.sprite(screenWidth * 0.533, screenHeight * 0.49, "bush");
-    this.add.sprite(screenWidth * 0.633, screenHeight * 0.49, "bush");
+    this.add.sprite(screenWidth * 0.05, screenHeight * 0.74, "Hedge_Roses").setDepth(10);
+    this.add.sprite(screenWidth * 0.18, screenHeight * 0.74, "Hedge_Roses").setDepth(10);
+    this.add.sprite(screenWidth * 0.31, screenHeight * 0.74, "Hedge_Roses").setDepth(10);
+    this.add.sprite(screenWidth * 0.44, screenHeight * 0.74, "Hedge_Roses").setDepth(10);
+    this.add.sprite(screenWidth * 0.57, screenHeight * 0.74, "Hedge_Roses").setDepth(5);
+    //this.add.sprite(screenWidth * 0.57, screenHeight * 0.74, "Hedge_Roses").setDepth(1);
+    this.add.sprite(screenWidth * 0.57, screenHeight * 0.59, "Hedge_Roses").setDepth(4);
+    this.add.sprite(screenWidth * 0.57, screenHeight * 0.44, "Hedge_Roses").setDepth(3);
+    this.add.sprite(screenWidth * 0.57, screenHeight * 0.29, "Hedge_Roses").setDepth(2);
+    // this.add.sprite(screenWidth * 0.43, screenHeight * 0.6, "Hedge_Roses").setDepth(12);
 
-    this.add.sprite(screenWidth * 0.49, screenHeight * 0.9, "bush").setDepth(10);
-    this.add.sprite(screenWidth * 0.49, screenHeight * 0.795, "bush").setDepth(5);
-    this.add.sprite(screenWidth * 0.584, screenHeight * 0.795, "bush").setDepth(1);
-    this.add.sprite(screenWidth * 0.683, screenHeight * 0.795, "bush");
+    this.add.sprite(screenWidth * 0.9 , screenHeight * 0.89, "Hedge_Roses").setDepth(6);
+    this.add.sprite(screenWidth * 0.9 , screenHeight * 0.74, "Hedge_Roses").setDepth(5);
+    //this.add.sprite(screenWidth * 0.57, screenHeight * 0.74, "Hedge_Roses").setDepth(1);
+    this.add.sprite(screenWidth * 0.9, screenHeight * 0.59, "Hedge_Roses").setDepth(4);
+    this.add.sprite(screenWidth * 0.9, screenHeight * 0.44, "Hedge_Roses").setDepth(3);
+    this.add.sprite(screenWidth * 0.9, screenHeight * 0.29, "Hedge_Roses").setDepth(2);
 
     // 動態設置蘿蔔和其他物件
-    this.arrowRight = this.add.sprite(screenWidth * 0.16, screenHeight * 0.87, "arrowRight");
-    this.arrowUp = this.add.sprite(screenWidth * 0.41, screenHeight * 0.79, "arrowUp");
-    this.arrowUp = this.add.sprite(screenWidth * 0.5, screenHeight * 0.61, "arrowRight");
+    this.arrowRight = this.add.sprite(screenWidth * 0.25, screenHeight * 0.9, "arrowRight");
+    this.arrowUp = this.add.sprite(screenWidth * 0.75, screenHeight * 0.7, "arrowUp");
+    // this.arrowUp = this.add.sprite(screenWidth * 0.5, screenHeight * 0.45, "arrowRight");
 
     // 設定背景音樂，並讓它們循環播放
     this.audio = this.sound.add("audio", { loop: true, volume: 0.2   });
+    this.catIntro = this.sound.add("catIntro", { loop: false, volume: 0.5 });
 
     // 播放第一首音樂
     this.audio.play();
@@ -176,16 +182,25 @@ export default {
     };
 
     if(localProgress === 0) {
-      this.story.play();
-
-      showMsg(guideMsg);
-      this.time.delayedCall(guideMsg.length * 180, () => {
-        overlay.setVisible(true);
-        this.firstGuide.play()
+      this.catIntro.play();
+      displayedText = '';
+      guideText.setText(displayedText);
+      showMsg(' 今天，小兔子決定在花園裡種植新鮮的小黃瓜。 ');
+      this.time.delayedCall(displayedText.length*170 + 5000, () => {
         displayedText = '';
         guideText.setText(displayedText);
-        showMsg('為了讓小兔子找到胡蘿蔔，需要點擊這個喇叭按鈕。')
-      });
+        showMsg(' 趕快跟隨小兔子展開冒險，一起尋找小黃瓜的種子吧！ ');
+      })
+      // this.story.play();
+
+      // showMsg(guideMsg);
+      // this.time.delayedCall(guideMsg.length * 180, () => {
+      //   overlay.setVisible(true);
+      //   this.firstGuide.play()
+      //   displayedText = '';
+      //   guideText.setText(displayedText);
+      //   showMsg('為了讓小兔子找到胡蘿蔔，需要點擊這個喇叭按鈕。')
+      // });
     }
 
 
@@ -193,26 +208,20 @@ export default {
     this.littleGameBack = this.sound.add("littleGameBack", { loop: false, volume: 0.5 });
     this.goBack = this.sound.add("goBack", { loop: false, volume: 0.5 });
     if (localProgress === 0) {
-      this.door = this.add.sprite(screenWidth * 0.75, screenHeight * 0.65, "door").setDepth(10);
+      this.door = this.add.sprite(screenWidth * 0.75, screenHeight * 0.45, "door").setDepth(10);
       this.carrot = this.add.sprite(screenWidth * 0.65, screenHeight * 0.65, "carrot").setDepth(10);
       this.carrot.setVisible(false); // 在 localProgress === 0 時隱藏蘿蔔
     } else if (localProgress === 1) {
-      this.door = this.add.sprite(screenWidth * 0.65, screenHeight * 0.65, "door").setDepth(10);
+      this.door = this.add.sprite(screenWidth * 0.65, screenHeight * 0.45, "door").setDepth(10);
       this.door.setVisible(false); // 在 localProgress === 1 時隱藏門
-      this.carrot = this.add.sprite(screenWidth * 0.75, screenHeight * 0.65, "carrot").setDepth(10);
+      this.carrot = this.add.sprite(screenWidth * 0.75, screenHeight * 0.45, "cucumber").setDepth(10);
       displayedText = '';
       guideText.setText(displayedText);
-      showMsg('哇!太棒了!你真的很聰明，小兔子非常感謝你。')
-      this.littleGameBack.play();
-      this.time.delayedCall(5000, () => {
-        displayedText = '';
-        guideText.setText(displayedText);
-        showMsg('現在我們回到農場，看看種下的種子吧!');
-        this.goBack.play();
-      })
-      this.time.delayedCall(10000, () => {
+      showMsg('你真厲害，小兔子成功打開了鎖住的門，找到了小黃瓜種子');
+      this.goBack.play();
+      this.time.delayedCall(6000, () => {
         this.audio.stop();
-        this.scene.start("farm");
+        this.scene.start("farm2");
       })
     }
 
@@ -266,16 +275,16 @@ export default {
         circle.fillStyle(0xf86c4e, 1);
         circle.fillCircle(circleX, circleY, circleRadius);
         overlay.setVisible(true);
-        displayedText = '';
-        guideText.setText(displayedText);
-        if (walkProgress === 0) {
-          showMsg('請跟我一起說，小兔子往前走')
-          this.secondGuide.play();
-        }
-        if (walkProgress === 1) {
-          showMsg('請跟我一起說，小兔子往上走')
-          this.secondTalk.play();
-        }
+        // displayedText = '';
+        // guideText.setText(displayedText);
+        // if (walkProgress === 0) {
+        //   showMsg('請跟我一起說，小兔子往前走')
+        //   this.secondGuide.play();
+        // }
+        // if (walkProgress === 1) {
+        //   showMsg('請跟我一起說，小兔子往上走')
+        //   this.secondTalk.play();
+        // }
         walkProgress += 1;
     } else {
         // Switch back to white background and hide overlay
@@ -283,28 +292,28 @@ export default {
         circle.fillStyle(0xfbf9f9, 1);
         circle.fillCircle(circleX, circleY, circleRadius);
         overlay.setVisible(false);
-        displayedText = '';
-        guideText.setText(displayedText);
-        if (walkProgress === 1) {
-          this.time.delayedCall(4000, () => {
-            showMsg('做得很棒喔')
-            this.thirdGuide.play();
-          })
-          this.time.delayedCall(5000, () => {
-            displayedText = '';
-            guideText.setText(displayedText);
-            showMsg('請再次點擊這個喇叭按鈕')
-            this.forthGuide.play();
-          })
-        }
-        if (walkProgress === 2) {
-          this.time.delayedCall(3000, () => {
-            displayedText = '';
-            guideText.setText(displayedText);
-            showMsg('現在，交給你試一次吧!')
-            this.yourTurn.play();
-          })
-        }
+        // displayedText = '';
+        // guideText.setText(displayedText);
+        // if (walkProgress === 1) {
+        //   this.time.delayedCall(4000, () => {
+        //     showMsg('做得很棒喔')
+        //     this.thirdGuide.play();
+        //   })
+        //   this.time.delayedCall(5000, () => {
+        //     displayedText = '';
+        //     guideText.setText(displayedText);
+        //     showMsg('請再次點擊這個喇叭按鈕')
+        //     this.forthGuide.play();
+        //   })
+        // }
+        // if (walkProgress === 2) {
+        //   this.time.delayedCall(3000, () => {
+        //     displayedText = '';
+        //     guideText.setText(displayedText);
+        //     showMsg('現在，交給你試一次吧!')
+        //     this.yourTurn.play();
+        //   })
+        // }
         // this.time.delayedCall(1000, () => (this.move = 4))
     }
     isRecording = !isRecording; // Toggle the state
@@ -361,7 +370,7 @@ export default {
         this.rabbit.setTexture("rabbitUp");
         this.tweens.add({
           targets: this.rabbit,
-          y: this.rabbit.y - 40, // 向上移動
+          y: this.rabbit.y - 70, // 向上移動
           duration: 1000,
           ease: "Power2",
           onComplete: () => {
@@ -436,7 +445,7 @@ export default {
       if (distance < 80) {
         this.audio.stop();
         localProgress += 1;
-        this.scene.start("shapeMemory");
+        this.scene.start("whosSound");
       } else {
         this.love.setVisible(false); // 隱藏 love
       }
