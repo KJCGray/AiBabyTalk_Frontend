@@ -10,6 +10,10 @@ export default {
       this.load.audio("wrong", "/audio/wrong.mp3");
       this.load.audio("audioGuitar", "/audio/happyJazzGuitar.mp3");
       this.load.audio("shapeMemoryAudio", "/audio/gameVoice/11-shapeMemory-圓形.wav");
+      this.load.audio("selectAudio", "/audio/gameVoice/現在，請點擊你覺得是圓形的圖案吧!.wav");
+      this.load.audio("correctAns", "/audio/gameVoice/答對了!這個就是圓形!.wav");
+      this.load.audio("wrongTri", "/audio/gameVoice/不對喔，這個是三角形，再試一次吧.wav");
+      this.load.audio("wrongSqu", "/audio/gameVoice/不對喔，這個是正方形，再試一次吧.wav");
       // 喇叭
       this.load.image("play", "/play-alt-1.png");
       this.load.image("pause", "/pause.png");
@@ -59,10 +63,14 @@ export default {
       this.endText.setVisible(false);
 
       // 載入音效
-      this.correctSound = this.sound.add("correct");
-      this.wrongSound = this.sound.add("wrong");
+      this.correctSound = this.sound.add("correct", { loop: false, volume: 0.2 });
+      this.correctAns = this.sound.add("correctAns");
+      this.wrongSound = this.sound.add("wrong", { loop: false, volume: 0.2 });
+      this.wrongTri = this.sound.add("wrongTri");
+      this.wrongSqu = this.sound.add("wrongSqu");
       this.audioGuitar = this.sound.add("audioGuitar", { loop: true, volume: 0.2 });
       this.shapeMemoryAudio = this.sound.add("shapeMemoryAudio", { loop: false, volume: 0.5 });
+      this.selectAudio = this.sound.add("selectAudio", { loop: false, volume: 0.5 });
       this.audioGuitar.play();
 
       const guideMsg = " 小兔子需要你的幫忙，他需要找到圓形來打開秘密的門，這樣才能找到胡蘿蔔種子，幫助小兔子解決這個問題，讓他可以種下更多美味的胡蘿蔔吧! ";
@@ -78,7 +86,6 @@ export default {
       }).setOrigin(0.5).setDepth(21);
 
       const showMsg = (msg) => {
-        this.shapeMemoryAudio.play();
         let index = 0;
         const maxWidth = screenWidth - 300; // 設定最大寬度
 
@@ -105,7 +112,14 @@ export default {
         });
       };
 
+      this.shapeMemoryAudio.play();
       showMsg(guideMsg);
+      this.time.delayedCall(guideMsg.length *170, () => {
+        displayedText = '';
+        guideText.setText(displayedText);
+        showMsg('現在，請點擊你覺得是圓形的圖案吧!');
+        this.selectAudio.play();
+      })
 
       const circle = this.add.graphics();
       const circleX = screenWidth * 0.05;
@@ -127,7 +141,8 @@ export default {
         playImage.setTexture("pause");
         displayedText = '';
         guideText.setText(displayedText);
-        showMsg(guideMsg);
+        this.selectAudio.play();
+        showMsg('現在，請點擊你覺得是圓形的圖案吧!');
         this.time.delayedCall(6400, () => {
           playImage.setTexture("play");
         })
@@ -138,12 +153,13 @@ export default {
       let text = ""; // 儲存要顯示的文字
 
       this.circle.on("pointerdown", () => {
-        text = "答對了！這是圓形!";
+        text = "答對了！這個就是圓形!";
         this.endText.setText(text);
         this.endSquare.setVisible(true);
         this.endText.setVisible(true);
         this.correctSound.play();
-        this.time.delayedCall(1000, () => {
+        this.correctAns.play();
+        this.time.delayedCall(2500, () => {
           this.scene.start("rabbitForCarrot")
           this.audioGuitar.stop();
         })
@@ -155,7 +171,8 @@ export default {
         this.endSquare.setVisible(true);
         this.endText.setVisible(true);
         this.wrongSound.play();
-        this.time.delayedCall(2000, () => {
+        this.wrongTri.play();
+        this.time.delayedCall(2300, () => {
           this.endSquare.setVisible(false);
           this.endText.setVisible(false);
         })
@@ -167,7 +184,8 @@ export default {
         this.endSquare.setVisible(true);
         this.endText.setVisible(true);
         this.wrongSound.play();
-        this.time.delayedCall(2000, () => {
+        this.wrongSqu.play();
+        this.time.delayedCall(2300, () => {
           this.endSquare.setVisible(false);
           this.endText.setVisible(false);
         })

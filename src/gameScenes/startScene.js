@@ -10,10 +10,10 @@ export default {
   preload: function () {
     // 预载入资源
     this.load.image("grassTexture", "/background/Grass_Texture.png");
-    this.load.image("兔子", "/Characters/Rabbit_Down.png");
-    this.load.image("貓咪", "/Characters/Cat_Down.png");
+    this.load.image("小兔子", "/Characters/Rabbit_Down.png");
+    this.load.image("小貓咪", "/Characters/Cat_Down.png");
     this.load.image("小雞", "/Characters/Chick_Down.png");
-    this.load.image("狐狸", "/Characters/Fox_Down.png");
+    this.load.image("小狐狸", "/Characters/Fox_Down.png");
     this.load.image("小豬", "/Characters/Pig_Down.png");
     this.load.image("sky", "/background/Bg.png");
     this.load.image("cloud01", "/background/Cloud_01.png");
@@ -28,7 +28,9 @@ export default {
     this.load.image("barGreen", "/UI/Bar_Green.png"); // 载入底板
     this.load.image("barRed", "/UI/Bar_Red.png"); // 载入底板
     // 載入音樂
-    this.load.audio("rabbitSelect", "/audio/gameVoice/1.wav");
+    this.load.audio("rabbitSelect", "/audio/gameVoice/你確定要選擇小兔子當你的冒險小夥伴嗎.wav");
+    this.load.audio("foxSelect", "/audio/gameVoice/你確定要選擇小狐狸當你的冒險小夥伴嗎.wav");
+    this.load.audio("animalSelect", "/audio/gameVoice/請選擇你的一起冒險的小動物.wav");
     this.load.audio("openMusic", "/audio/openingMusic.mp3");
   },
 
@@ -64,9 +66,10 @@ export default {
 
     // 設定選擇語音
     this.rabbitSelect = this.sound.add("rabbitSelect", { loop: false, volume: 0.5 });
+    this.foxSelect = this.sound.add("foxSelect", { loop: false, volume: 0.5 });
+    this.animalSelect = this.sound.add("animalSelect", { loop: false, volume: 0.5 });
     this.openMusic = this.sound.add("openMusic", { loop: false, volume: 0.2 });
     this.openMusic.play();
-
 
 
     // 动态设置按钮与文字
@@ -99,18 +102,19 @@ export default {
         startBtn.setVisible(false); // 隐藏按钮
         startText.setVisible(false); // 隐藏文字
         this.add
-          .text(screenWidth * 0.5, screenHeight * 0.2, "選擇你的小動物吧", {
+          .text(screenWidth * 0.5, screenHeight * 0.2, "請選擇與你一起冒險的小動物", {
             fontSize: `${Math.min(screenWidth, screenHeight) * 0.05}px`,
             color: "#000",
             fontStyle: "bold",
             fontFamily: "Arial",
           })
           .setOrigin(0.5); // 显示新文本
+        this.animalSelect.play();
       }
     });
 
     // 添加动物并设置点击事件
-    const animals = ["貓咪", "兔子", "小雞", "狐狸", "小豬"];
+    const animals = ["小貓咪", "小兔子", "小雞", "小狐狸", "小豬"];
     const positions = [0.3, 0.4, 0.5, 0.6, 0.7];
     animals.forEach((animal, index) => {
       const animalSprite = this.add.sprite(
@@ -177,7 +181,11 @@ export default {
             y: screenHeight * 0.5, // 移動到新位置 Y
             duration: 500, // 動畫持續時間
             onComplete: () => {
-              this.rabbitSelect.play();
+              if (selectedAnimal === "小兔子") {
+                this.rabbitSelect.play();
+              } else if (selectedAnimal === "小狐狸") {
+                this.foxSelect.play();
+              }
               // 在新位置跳動
               const animalTween = this.tweens.add({
                 targets: animalSprite,
@@ -200,7 +208,7 @@ export default {
                 confirmNo.destroy();
                 animalTween.stop(); // 停止跳动动画
                 this.openMusic.stop();
-                this.scene.start("farm");
+                this.scene.start("farm2");
               });
 
               // 再考虑一下按钮的点击事件

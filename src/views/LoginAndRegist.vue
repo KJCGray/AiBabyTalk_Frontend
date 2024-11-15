@@ -53,18 +53,10 @@ div(class="w-screen h-screen bg-[#FFFDD0] flex justify-center items-center")
             div(class="flex items-center")
               input(type="radio" class="w-4 h-4 mr-1.5 cursor-pointer" name="sex" id="girl")
               label(for="girl" class="cursor-pointer select-none") 女生
-        div(class="flex items-center justify-center w-full")
-          p 興趣
-          input(class="w-[60%] h-9 ml-6 p-1 border rounded focus:outline-none")
-        div(class="flex items-center justify-center w-full mr-16")
-          div
-            p 用形容詞敘述
-            p 孩子的個性
-          textarea(class="w-[60%] h-16 ml-6 p-1 border rounded text-wrap focus:outline-none" placeholder="例如:開朗大方,樂觀陽光,害羞靦腆...")
         button(
           class="w-[15%] h-9 bg-[#FFA500] rounded px-1 ml-auto hover:bg-[#ffa600d6]"
           @click="togglePage(2)"
-          ) 下一頁
+          ) 登入
       div(
         v-if="registPage===2"
         class="flex flex-col items-center justify-around w-full h-full"
@@ -115,6 +107,7 @@ function toggleMode (val) {
 }
 
 function togglePage (val) {
+  if (val === 2) router.push('/game');
   registPage.value = val;
 }
 
